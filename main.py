@@ -28,6 +28,16 @@ database_file = 'database.txt'
 # Define your thread pool executor (if needed for other purposes)
 executor = concurrent.futures.ThreadPoolExecutor(max_workers=150)
 
+def get_user_servers(user):
+    servers = []
+    if not os.path.exists(database_file):
+        return servers
+    with open(database_file, 'r') as f:
+        for line in f:
+            if line.startswith(user):
+                servers.append(line)
+    return servers
+
 def count_user_servers(user):
     count = 0
     if not os.path.exists(database_file):
